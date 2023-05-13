@@ -1,0 +1,144 @@
+*{
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  list-style: none;
+
+  box-sizing: border-box;
+}
+
+
+:root{
+  --azul-escuro: #1A5276;
+  --verde-claro: #2ECC71;
+  --cinza-claro: #BDC3C7;
+  --branco: #FFFFFF;
+  --vermelho-escuro: #B03A2E;
+}
+
+/*Web site Header*/
+#website_header{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  height: 3.75rem;
+  width: 100vw;
+
+  padding: 0rem 2rem;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  background-color: var(--azul-escuro);
+}
+
+#website_logo{
+  display: block;
+  height: 2rem;
+  width: 2rem;
+}
+
+#navbar{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+
+  height: 100%;
+
+  position: relative;
+}
+
+.itemNavbar{
+  color: var(--branco);
+}
+.itemNavbar:nth-child(3){
+  color: var(--branco);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: .0rem;
+}
+.itemNavbar:nth-child(3) svg{
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.itemNavbar:nth-child(3) p{
+  margin: 0rem 0rem 1.5rem 0rem;
+
+  border-radius: 1rem;
+  
+  height: 1rem;
+  width: 1rem;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  font-size: .8rem;
+
+  background-color: var(--vermelho-escuro);
+}
+
+#btnIconLoginDropDown{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: .5rem;
+  flex-direction: row;
+
+  color: var(--branco);
+
+  height: 1.5rem;
+  width: 1.5rem;
+
+  cursor: pointer;
+}
+
+#itemMenuLogin{
+  display: none;
+}
+
+#dropDownMenuLogin{
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+#dropDownMenuLogin:hover #itemMenuLogin{
+  position: absolute;
+  top: 3.75rem;
+  right: -2rem;
+  
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  flex-direction: column;
+  
+
+  height: calc(100vh - 3.75rem);
+  width: 12rem;
+
+  background-color: var(--azul-escuro);
+}
+
+#itemMenuLogin a{
+  color: var(--branco);
+  display: block;
+  width: 100%;
+  height: auto;
+
+  padding: 1rem 0rem;
+
+  text-align: center;
+}
+#itemMenuLogin a:hover{
+  background-color: var(--cinza-claro);
+}
