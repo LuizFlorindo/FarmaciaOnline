@@ -7,9 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description"
     content="Looking for an easy and convenient way to get your prescription and over-the-counter medications? Our online pharmacy offers a wide range of medications to meet your healthcare needs. Browse our website from the comfort of your own home and have your medications delivered straight to your doorstep. With fast and discreet shipping and experienced pharmacists on hand to answer any questions you may have, shopping for medications has never been easier. Visit us today and experience the convenience of online pharmacy shopping!">
-  <link rel="shortcut icon" href="./media/pharmacy_logo.png" type="image/x-icon">
+  <link rel="shortcut icon" href="./media/image/pharmacy_logo.png" type="image/x-icon">
 
-  <title>Online Pharmacy| Home</title>
+  <title>Online Pharmacy | Start</title>
 
   <link rel="stylesheet" href="./style.css">
 
@@ -18,10 +18,10 @@
 
 <body>
   <header id="website_header">
-    <img src="./media/pharmacy_logo.png" alt="Logo da loja" id="website_logo">
+    <img src="./media/image/pharmacy_logo.png" alt="Logo da loja" id="website_logo">
 
     <nav id="navbar">
-      <a href="./index.html" class="itemNavbar">Home</a>
+      <a href="./index.php" class="itemNavbar">Home</a>
       <a href="./view/about.html" class="itemNavbar">About</a>
 
       <a href="./view/basket.html" class="itemNavbar">
@@ -34,14 +34,13 @@
       <div id="dropDownMenuLogin">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" id="btnIconLoginDropDown" viewBox="0 0 16 16">
           <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-          <path fill-rule="evenodd"
-            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+          <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
         </svg>
 
         <div id="itemMenuLogin">
-          <a href="./view/singIn.html">Sing In</a>
-          <a href="./view/singUp.html">Sing Up</a>
-          <a href="./controller/LogOut.php">LogOut</a>
+          <a href="./view/login.html">Login</a>
+          <a href="./view/register.php">Register</a>
+          <a href="./controller/exit.php">Exit</a>
         </div>
       </div>
     </nav>

@@ -23,7 +23,8 @@ CREATE TABLE IF NOT EXISTS usuarios (
     id INT NOT NULL AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL,
-    senha VARCHAR(100) NOT NULL,
+    senha VARCHAR(35) NOT NULL,
+    statusConta VARCHAR(15) NOT NULL,
     PRIMARY KEY (id)
 );
 
