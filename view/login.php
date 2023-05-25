@@ -1,3 +1,7 @@
+<?php 
+  session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -20,8 +24,9 @@
 
     <nav id="navbar">
       <a href="../index.php" class="itemNavbar">Home</a>
-      <a href="./about.html" class="itemNavbar">About</a>
-
+      <a href="./about.html" class="itemNavbar">Sobre</a>
+      <a href="./prodRegister.php" class="itemNavbar" id="novoProduto_button">Novo Product</a>
+      <a href="./view/updateProduct.php" class="itemNavbar" id="atualizarProduto_button">Update Product</a>
       <a href="./basket.html" class="itemNavbar">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" id="basketIcon" viewBox="0 0 16 16">
           <path d="M5.929 1.757a.5.5 0 1 0-.858-.514L2.217 6H.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h.623l1.844 6.456A.75.75 0 0 0 3.69 15h8.622a.75.75 0 0 0 .722-.544L14.877 8h.623a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1.717L10.93 1.243a.5.5 0 1 0-.858.514L12.617 6H3.383L5.93 1.757zM4 10a1 1 0 0 1 2 0v2a1 1 0 1 1-2 0v-2zm3 0a1 1 0 0 1 2 0v2a1 1 0 1 1-2 0v-2zm4-1a1 1 0 0 1 1 1v2a1 1 0 1 1-2 0v-2a1 1 0 0 1 1-1z" />
@@ -36,51 +41,50 @@
         </svg>
 
         <div id="itemMenuLogin">
-          <a href="./login.html">Login</a>
-          <a href="./register.html">Register</a>
-          <a href="../controller/exit.php">Exit</a>
+          <a href="./login.php" id="login_button">Login</a>
+          <a href="./register.php" id="register_button">Register</a>
+          <a href="../controller/exit.php" id="exit_button">Exit</a>
         </div>
       </div>
     </nav>
   </header>
 
-  <main id="container_register">
-    <div id="containerRegister_partitions">
-      <div id="left_container">
-        <img src="../media/image/image_right_singUp.png" alt="imagem qualquer">
-      </div>
-      <div id="right_container">
-        <form action="./register.php" method="post">
-          <div id="form_head">
-            <img src="../media/image/conecte-se.png" alt="enter image">
-            <h2>Welcome</h2>
-          </div>
-          <div id="form_body">
 
+  <main id="container_login">
+    <div id="particao_containerLogin">
+      <div id="left_container_login">
+        <form action="./login.php" method="post">
+          <div id="form_head">
+            <img src="../media/image/login.png" alt="Representação de uma porta aberta e uma seta apontando para dentro">
+            <h2>Login de Usuário</h2>
+          </div>
+
+          <div id="form_body">
             <label for="email">E-mail:</label>
             <div class="controller_input">
-              <input type="email" name="email" id="email">
+              <input type="email" name="email" id="email" placeholder="Digite seu email de login">
             </div>
 
-            <label for="password">Password:</label>
+            <label for="password">Senha:</label>
             <div class="controller_input">
-              <input type="password" name="password" id="password">
+              <input type="password" name="password" id="password" placeholder="Digite sua senha de login">
               <div id="icon_view_password" onclick="show_hide('password')"></div>
             </div>
 
             <span id="alertMessage"></span>
             <div id="btn_create">
-              <input type="submit" name="submit" value="Create">
+              <input type="submit" name="submit" value="Login">
             </div>
             <div id="links">
-              <a href="./register.php">Don't have an account?</a>
-              <a href="./register.php">Forgot password?git</a>
+              <p>Não possue conta?<a href="./register.php">cadastrar-se</a></p>
+              <p>Esqueceu a senha? <a href="./forgotPassword.html">Modificar senha</a></p>
             </div>
           </div>
         </form>
-      </div>
-    </div>
 
+      </div>
+      <div id="right_container_login"></div>
+    </div>
   </main>
   <script src="../script.js"></script>
 </body>
@@ -88,39 +92,57 @@
 </html>
 
 <?php
+if (isset($_SESSION['login_user'])) {
+  $user_id = $_SESSION['login_user'];
+  $query = "SELECT * FROM usuarios WHERE id='$user_id'";
+  $user = mysqli_query($conn, $query);
+  if (mysqli_num_rows($user) == 1) {
+    $user_dados = mysqli_fetch_assoc($user);
+
+    /* Esconde o menu administrador do usuário comum */
+    if ($user_dados['statusConta'] == "comum") {
+      echo "<script>disable_menu_items('logado', 'comum')</script>";
+    } else {
+      echo "<script>disable_menu_items('logado', 'admin')</script>";
+    }
+  } 
+} else {
+  echo "<script>disable_menu_items('deslogado', 'comum')</script>";
+}
+
 if (isset($_POST['submit'])) {
-  if (empty($_POST['name']) || empty($_POST['email']) || empty($_POST['password']) || empty($_POST['confirmPassword'])) {
-    echo "<script>alertMessageHTML('error', 'Error: Empty field. Please fill in all fields!')</script>";
+  if (empty($_POST['email']) || empty($_POST['password'])) {
+    echo "<script>alertMessageHTML('error', 'Erro: Empty field. Please fill in all fields!')</script>";
   } else {
     include_once("../dao/bdConnection.php");
 
-    echo "<script>alertMessageHTML('sucess', '')</script>";
+    echo "<script>alertMessageHTML('success', '')</script>";
 
     /* 
         Segurança para evitar injeção de SQL no banco de dados (códigos maliciosos)
         Security to avoid SQL injection into the database (malicious codes)
       */
-    $name = filter_input(INPUT_POST, "name", FILTER_DEFAULT);
     $email = filter_input(INPUT_POST, "email", FILTER_DEFAULT);
     $password = md5(filter_input(INPUT_POST, "password", FILTER_DEFAULT));
-    $confirmPassword = md5(filter_input(INPUT_POST, "confirmPassword", FILTER_DEFAULT));
 
-    echo $name, $confirmPassword, $email, $password;
-    if ($password == $confirmPassword) {
-      $check_if_account_exists = "SELECT * FROM usuarios WHERE email='$email'";
-      if (mysqli_query($conn, $check_if_account_exists)) {
-        echo "<script>alertMessageHTML('error', 'Error: An account with that email already exists. Try a new email or login with existing email.')</script>";
-      } else {
-        $query = "INSERT INTO usuarios(nome, email, senha, statusConta) VALUES ('$name', '$email', '$password', 'common')";
-        if (mysqli_query($conn, $query)) {
-          echo "<script>alertMessageHTML('sucess', 'Account successfully created!')</script>";
-          echo "<script>windown.location.href='./singIn.php'</script>";
-        } else {
-          echo "<script>alertMessageHTML('error', 'Error: Failed to try to create the account. Please try again.')</script>";
-        }
+    $check_if_account_exists = "SELECT * FROM usuarios WHERE email='$email' AND senha='$password'";
+    $res = mysqli_query($conn, $check_if_account_exists);
+    if (mysqli_num_rows($res) == 1) {
+      $user = mysqli_fetch_assoc($res);
+      session_start();
+      if (isset($_SESSION['login_user'])) {
+        session_destroy();
       }
+      $_SESSION['login_user'] = $user['id'];
+
+      echo "
+      <script>
+        alertMessageHTML('success', 'Logado com sucesso!');
+        setInterval(()=>window.location.href='../index.php', 1000);
+      </script>
+      ";
     } else {
-      echo "<script>alertMessageHTML('error', 'Error: Entered passwords are different. Please try again.')</script>";
+      echo "<script>alertMessageHTML('error', 'Erro: Falha ao tentar logar. Por favor tente novamente.')</script>";
     }
   }
 }

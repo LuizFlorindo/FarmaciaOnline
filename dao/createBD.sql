@@ -12,8 +12,10 @@ CREATE TABLE IF NOT EXISTS produto (
     id INT NOT NULL AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL,
     descricao TEXT NOT NULL,
+    marca VARCHAR(100) NOT NULL,
     quantidade INT NOT NULL,
-    preco FLOAT NOT NULL,
+    preco VARCHAR(100) NOT NULL,
+    imagem VARCHAR(100) NOT NULL,
     categoria_id INT NOT NULL,
     FOREIGN KEY (categoria_id) REFERENCES categoria(id),
     PRIMARY KEY (id)
